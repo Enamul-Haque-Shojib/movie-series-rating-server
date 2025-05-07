@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model Auth {
+  id             String       @id @default(uuid()) 
+  name          String
+  email         String       @unique
+  photoUrl        String?
+  password        String
+  status             AuthStatus @default(ACTIVE)
+  role               AuthRole  @default(USER)
+    like            Like[]
+    unlike            Unlike[]
+    comment            Comment[]
+  watchList   WatchList[]
+  review        Review[]
+  createdAt      DateTime       @default(now())
+  updatedAt       DateTime     @updatedAt
+
+   @@map("auth")
+}
+
+model Media {
+  id             String       @id @default(uuid()) 
+  title          String
+  image           String
+  description    String
+  year            String
+  status        MediaStatus
+  buy_price     String
+  rent_price    String
+  rating          String        @default("0")
+  isDeleted      Boolean       @default(false)
+  like            Like[]
+  unlike            Unlike[]
+  comment            Comment[]
+  watchList   WatchList[]
+   review        Review[]
+  createdAt      DateTime       @default(now())
+  updatedAt       DateTime     @updatedAt
+
+   @@map("media")
+}
+
+model Like {
+    id       String   @id @default(uuid())
+  userId   String
+  mediaId  String
+  reviewId  String
+
+  user     Auth     @relation(fields: [userId], references: [id])
+  media    Media    @relation(fields: [mediaId], references: [id])
+  review    Review    @relation(fields: [reviewId], references: [id])
+   @@unique([userId, mediaId],  name: "user_media_like_unique")
+    @@map("like")
+}
+model Unlike {
+     id       String   @id @default(uuid())
+  userId   String
+  mediaId  String
+  reviewId  String
+
+  user     Auth     @relation(fields: [userId], references: [id])
+  media    Media    @relation(fields: [mediaId], references: [id])
+  review    Review    @relation(fields: [reviewId], references: [id])
+   @@unique([userId, mediaId],  name: "user_media_unlike_unique")
+
+    @@map("unlike")
+}
+
+model Comment {
+     id       String   @id @default(uuid())
+  userId   String
+  mediaId  String
+    userComment      String
+  user     Auth     @relation(fields: [userId], references: [id])
+  media    Media    @relation(fields: [mediaId], references: [id])
+
+   createdAt      DateTime       @default(now())
+  updatedAt       DateTime     @updatedAt
+
+   @@map("comment")
+
+}
+
+model Review {
+   id       String   @id @default(uuid())
+  userId   String
+  mediaId  String
+  content   String
+  tags       String[]
+  spoiler     Boolean     @default(false)
+  approved    Boolean    @default(false)
+ like      Like[]
+ unlike      Unlike[]
+
+   user     Auth     @relation(fields: [userId], references: [id])
+  media    Media    @relation(fields: [mediaId], references: [id])
+
+  createdAt      DateTime       @default(now())
+  updatedAt       DateTime     @updatedAt
+  @@unique([userId, mediaId],  name: "user_media_review_unique")
+  @@map("review")
+}
+
+
+
+model WatchList {
+   id       String   @id @default(uuid())
+  userId   String
+  mediaId  String
+
+  user     Auth     @relation(fields: [userId], references: [id])
+  media    Media    @relation(fields: [mediaId], references: [id])
+
+  @@unique([userId, mediaId], name: "userId_mediaId")
+
+   @@map("watchlist")
+
+}
+
+
+enum AuthRole {
+  USER
+  ADMIN
+  
+}
+
+enum AuthStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum MediaStatus {
+  MOVIE
+  SERIES
+}
