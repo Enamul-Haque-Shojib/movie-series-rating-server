@@ -2,6 +2,8 @@ import express from 'express';
 import { MediaRoutes } from '../modules/Media/media.routes';
 import { AuthRoutes } from '../modules/Auth/Auth.routes';
 import { UserActionRoutes } from '../modules/UserAction/UserAction.route';
+import { StatisticsRoutes } from '../modules/Statistics/Statistics.route';
+import { AdminActionRoutes } from '../modules/AdminAction/AdminAction.route';
 
 
 
@@ -18,8 +20,17 @@ const moduleRoutes = [
     },
     
     {
+        path: '/admin-action',
+        route: AdminActionRoutes
+    },
+    {
         path: '/user-action',
         route: UserActionRoutes
+    },
+    
+    {
+        path: '/statistics',
+        route: StatisticsRoutes
     },
     
 ];
