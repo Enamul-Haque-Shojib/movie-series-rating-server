@@ -31,6 +31,7 @@ model Auth {
     ReviewComment         ReviewComment[]
   watchList   WatchList[]
   review        Review[]
+  purchases      Purchase[]
   createdAt      DateTime       @default(now())
   updatedAt       DateTime     @updatedAt
 
@@ -59,6 +60,7 @@ model Media {
   comment            Comment[]
   watchList   WatchList[]
    review        Review[]
+   purchases      Purchase[]
   createdAt      DateTime       @default(now())
   updatedAt       DateTime     @updatedAt
 
@@ -172,6 +174,22 @@ model WatchList {
 
    @@map("watchlist")
 
+}
+
+
+model Purchase {
+  id         String   @id @default(uuid())
+  userId     String
+  mediaId    String
+  type       PurchaseType
+  createdAt  DateTime  @default(now())
+  user       Auth      @relation(fields: [userId], references: [id])
+  media      Media     @relation(fields: [mediaId], references: [id])
+}
+
+enum PurchaseType {
+  BUY
+  RENT
 }
 
 

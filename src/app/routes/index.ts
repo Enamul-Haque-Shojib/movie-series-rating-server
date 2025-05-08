@@ -4,6 +4,7 @@ import { AuthRoutes } from '../modules/Auth/Auth.routes';
 import { UserActionRoutes } from '../modules/UserAction/UserAction.route';
 import { StatisticsRoutes } from '../modules/Statistics/Statistics.route';
 import { AdminActionRoutes } from '../modules/AdminAction/AdminAction.route';
+import { PurchaseRoutes } from '../modules/Purchase/Purchase.route';
 
 
 
@@ -26,6 +27,10 @@ const moduleRoutes = [
     {
         path: '/user-action',
         route: UserActionRoutes
+    },
+    {
+        path: '/purchases',
+        route: PurchaseRoutes
     },
     
     

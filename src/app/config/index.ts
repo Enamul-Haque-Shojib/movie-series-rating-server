@@ -18,5 +18,7 @@ export default {
   emailSender: {
       email: process.env.EMAIL,
       app_pass: process.env.APP_PASS
-  }
+  },
+  payment_secret_key:process.env.PAYMENT_SECRET_KEY
+  
 };
