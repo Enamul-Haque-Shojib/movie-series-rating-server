@@ -33,12 +33,22 @@ const updateMediaIntoDB = async (id: string, payload: Partial<Media>):Promise<Me
             id,
         }
     });
+
+    let url = "";
+if(payload.streamingPlatform==="netflix"){
+  url = "https://www.netflix.com/bd/"
+}else if(payload.streamingPlatform==="amazon_prime_video"){
+  url = "https://www.primevideo.com/offers/nonprimehomepage/ref=dv_web_force_root"
+}
     
     const result = await prisma.media.update({
         where:{
             id
         },
-        data:payload
+        data: {
+          ...payload,
+          streamingLinks:url
+        }
     })
 
     return result;

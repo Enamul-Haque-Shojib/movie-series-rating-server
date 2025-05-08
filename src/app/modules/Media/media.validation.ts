@@ -34,9 +34,12 @@ const updateMediaValidationSchema = z.object({
     body: z.object({
         title: z.string().optional(),
         description: z.string().optional(),
+        synopsis: z.string().optional(),
         buy_price: z.string().optional(),
         rent_price: z.string().optional(),
         year: z.string().optional(),
+        streamingPlatform: z.string().optional(),
+        genre: z.string().optional(),
         status: z.enum(["MOVIE", "SERIES"]).optional(),
     })
     
