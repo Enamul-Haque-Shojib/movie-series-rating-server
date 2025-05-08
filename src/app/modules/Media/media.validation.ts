@@ -5,6 +5,9 @@ const addMediaValidationSchema = z.object({
         title: z.string({
             required_error: "Title is required"
         }),
+        director: z.string({
+            required_error: "Director is required"
+        }),
         description: z.string({
             required_error: "Description is required"
         }),
@@ -33,6 +36,7 @@ const addMediaValidationSchema = z.object({
 const updateMediaValidationSchema = z.object({
     body: z.object({
         title: z.string().optional(),
+        director: z.string().optional(),
         description: z.string().optional(),
         synopsis: z.string().optional(),
         buy_price: z.string().optional(),

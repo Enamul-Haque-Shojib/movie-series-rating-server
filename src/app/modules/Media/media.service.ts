@@ -7,7 +7,7 @@ import { mediaSearchableFields } from "./media.constant";
 
 
 const addMediaIntoDB = async (payload: Media) => {
-
+console.log(payload)
 let url = "";
 if(payload.streamingPlatform==="netflix"){
   url = "https://www.netflix.com/bd/"

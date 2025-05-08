@@ -41,6 +41,7 @@ model Media {
   id             String       @id @default(uuid()) 
   title          String
   image           String
+  director         String
   synopsis    String
   description    String
   year            String
