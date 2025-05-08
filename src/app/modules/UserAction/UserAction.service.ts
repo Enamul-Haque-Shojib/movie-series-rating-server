@@ -23,6 +23,7 @@ const addReviewIntoDB = async (payload: Review) => {
       content: payload.content,
       tags: payload.tags,
       spoiler: payload.spoiler,
+      rating: payload.rating
     },
   });
 
@@ -53,7 +54,7 @@ const addWatchListIntoDB = async (payload: { userId: string; mediaId: string }) 
   return result;
 };
 
-const addLikeIntoDB = async (payload: { userId: string; mediaId: string, reviewId: string }) => {
+const addLikeIntoDB = async (payload: { userId: string; mediaId: string }) => {
   // Step 1: Check if the user already liked the media
   const isExistLike = await prisma.like.findUnique({
     where: {
@@ -95,7 +96,6 @@ const addLikeIntoDB = async (payload: { userId: string; mediaId: string, reviewI
     data: {
       userId: payload.userId,
       mediaId: payload.mediaId,
-      reviewId: payload.reviewId
     },
   });
 
@@ -144,7 +144,6 @@ const addUnLikeIntoDB = async (payload: { userId: string; mediaId: string, revie
     data: {
       userId: payload.userId,
       mediaId: payload.mediaId,
-      reviewId: payload.reviewId
     },
   });
 
@@ -157,6 +156,43 @@ const addCommentIntoDB = async (payload: { userId: string; mediaId: string; user
     data: {
       userId: payload.userId,
       mediaId: payload.mediaId,
+      userComment: payload.userComment
+    },
+  });
+
+  return result;
+};
+
+const addReviewLikeIntoDB = async (payload: { userId: string; reviewId: string }) => {
+  
+  const isExistLike = await prisma.reviewLike.findUnique({
+    where: {
+      user_review_like_unique: {
+        userId: payload.userId,
+        reviewId: payload.reviewId,
+      },
+    },
+  });
+
+  if (isExistLike) {
+    throw new Error("You have already liked this review");
+  }
+
+  const result = await prisma.reviewLike.create({
+    data: {
+      userId: payload.userId,
+      reviewId: payload.reviewId,
+    },
+  });
+
+  return result;
+};
+const addReviewCommentIntoDB = async (payload: { userId: string; reviewId: string; userComment: string }) => {
+  
+  const result = await prisma.reviewComment.create({
+    data: {
+      userId: payload.userId,
+      reviewId: payload.reviewId,
       userComment: payload.userComment
     },
   });
@@ -206,6 +242,8 @@ const getAllReviewByMediaIdFromDB = async (mediaId: string): Promise<WatchList[]
     const result = await prisma.review.findMany({
       where: {
         mediaId,
+        approved: true,
+        published: true
       },
       include: {
         user: true, // This fetches the full media info for each watchlist item
@@ -214,6 +252,19 @@ const getAllReviewByMediaIdFromDB = async (mediaId: string): Promise<WatchList[]
   
     return result;
   };
+
+  const deleteReviewFromDB = async (id: string)  => {
+
+    const reviewDelete = await prisma.review.delete({
+        where: { 
+          id,
+          published: false
+         },
+      });
+
+    return reviewDelete;
+ 
+};
   
 
 
@@ -225,5 +276,8 @@ export const UserActionServices = {
     addCommentIntoDB,
     getCommentsByMediaIdFromDB,
     addReviewIntoDB,
-    getAllReviewByMediaIdFromDB
+    getAllReviewByMediaIdFromDB,
+    deleteReviewFromDB,
+    addReviewCommentIntoDB,
+    addReviewLikeIntoDB
 }

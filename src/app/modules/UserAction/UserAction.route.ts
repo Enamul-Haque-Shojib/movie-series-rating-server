@@ -40,6 +40,11 @@ router.get(
     UserActionControllers.getAllReviewByMediaId
 );
 
+router.delete(
+    '/user/delete-review/:id',
+    UserActionControllers.deleteReview
+);
+
 
 
 

@@ -55,6 +55,26 @@ const addComment = catchAsync(async (req, res) => {
         data: result
     });
 });
+const addReviewComment = catchAsync(async (req, res) => {
+    const result = await UserActionServices.addReviewCommentIntoDB(req.body);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Review Comment added successfully!",
+        data: result
+    });
+});
+const addReviewLike = catchAsync(async (req, res) => {
+    const result = await UserActionServices.addReviewLikeIntoDB(req.body);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Review Like added successfully!",
+        data: result
+    });
+});
 const getAllCommentsByMediaId = catchAsync(async (req, res) => {
     const result = await UserActionServices.getCommentsByMediaIdFromDB(req.params.id);
 
@@ -86,6 +106,17 @@ const getAllReviewByMediaId = catchAsync(async (req, res) => {
     });
 });
 
+const deleteReview = catchAsync(async (req, res) => {
+    const result = await UserActionServices.deleteReviewFromDB(req.params.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Review deleted successfully!",
+        data: result
+    });
+});
+
 export const UserActionControllers = {
     addWatchList,
     getAllWatchListByUserId,
@@ -94,5 +125,8 @@ export const UserActionControllers = {
     addUnLike,
     getAllCommentsByMediaId,
     addReview,
-    getAllReviewByMediaId
+    getAllReviewByMediaId,
+    deleteReview,
+    addReviewComment,
+    addReviewLike
 }

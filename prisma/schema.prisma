@@ -27,6 +27,8 @@ model Auth {
     like            Like[]
     unlike            Unlike[]
     comment            Comment[]
+    ReviewLike         ReviewLike[]
+    ReviewComment         ReviewComment[]
   watchList   WatchList[]
   review        Review[]
   createdAt      DateTime       @default(now())
@@ -39,11 +41,15 @@ model Media {
   id             String       @id @default(uuid()) 
   title          String
   image           String
+  synopsis    String
   description    String
   year            String
   status        MediaStatus
   buy_price     String
   rent_price    String
+  genre         String
+  streamingPlatform String
+  streamingLinks String
   rating          Float        @default(0)
   isEditorsPick  Boolean      @default(false)
   isDeleted      Boolean       @default(false)
@@ -58,15 +64,18 @@ model Media {
    @@map("media")
 }
 
+
+
+
 model Like {
     id       String   @id @default(uuid())
   userId   String
   mediaId  String
-  reviewId  String
+
 
   user     Auth     @relation(fields: [userId], references: [id])
   media    Media    @relation(fields: [mediaId], references: [id])
-  review    Review    @relation(fields: [reviewId], references: [id])
+
    @@unique([userId, mediaId],  name: "user_media_like_unique")
     @@map("like")
 }
@@ -74,11 +83,11 @@ model Unlike {
      id       String   @id @default(uuid())
   userId   String
   mediaId  String
-  reviewId  String
+
 
   user     Auth     @relation(fields: [userId], references: [id])
   media    Media    @relation(fields: [mediaId], references: [id])
-  review    Review    @relation(fields: [reviewId], references: [id])
+ 
    @@unique([userId, mediaId],  name: "user_media_unlike_unique")
 
     @@map("unlike")
@@ -108,9 +117,9 @@ model Review {
   tags       String[]
   spoiler     Boolean     @default(false)
   approved    Boolean    @default(false)
- like      Like[]
- unlike      Unlike[]
-
+  published    Boolean    @default(false)
+ reviewLike      ReviewLike[]
+ reviewComment      ReviewComment[]
    user     Auth     @relation(fields: [userId], references: [id])
   media    Media    @relation(fields: [mediaId], references: [id])
 
@@ -118,6 +127,34 @@ model Review {
   updatedAt       DateTime     @updatedAt
   @@unique([userId, mediaId],  name: "user_media_review_unique")
   @@map("review")
+}
+
+model ReviewLike {
+    id       String   @id @default(uuid())
+  userId   String
+
+  reviewId  String
+
+  user     Auth     @relation(fields: [userId], references: [id])
+  review    Review    @relation(fields: [reviewId], references: [id])
+
+   @@unique([userId, reviewId],  name: "user_review_like_unique")
+    @@map("review_like")
+}
+
+model ReviewComment {
+  id       String   @id @default(uuid())
+  userId   String
+  reviewId  String
+  userComment      String
+  user     Auth     @relation(fields: [userId], references: [id])
+  review    Review    @relation(fields: [reviewId], references: [id])
+
+   createdAt      DateTime       @default(now())
+  updatedAt       DateTime     @updatedAt
+
+   @@map("review_comment")
+
 }
 
 

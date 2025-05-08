@@ -7,10 +7,19 @@ import { mediaSearchableFields } from "./media.constant";
 
 
 const addMediaIntoDB = async (payload: Media) => {
-  
+
+let url = "";
+if(payload.streamingPlatform==="netflix"){
+  url = "https://www.netflix.com/bd/"
+}else if(payload.streamingPlatform==="amazon_prime_video"){
+  url = "https://www.primevideo.com/offers/nonprimehomepage/ref=dv_web_force_root"
+}
     
     const result = await prisma.media.create({
-        data: payload
+        data: {
+          ...payload,
+          streamingLinks:url
+        }
     })
 
     return result;

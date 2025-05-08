@@ -28,10 +28,6 @@ const moduleRoutes = [
         route: UserActionRoutes
     },
     
-    {
-        path: '/statistics',
-        route: StatisticsRoutes
-    },
     
 ];
 

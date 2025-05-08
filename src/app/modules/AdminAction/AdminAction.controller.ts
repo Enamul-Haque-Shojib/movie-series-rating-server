@@ -10,12 +10,57 @@ const editorPick = catchAsync(async (req, res) => {
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: "Top rated retrieved successfully!",
+        message: "editor pick  successfully!",
+        data: result
+    });
+});
+const approveReview = catchAsync(async (req, res) => {
+    const result = await AdminActionServices.approveReviewIntoDB(req.params.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "review approved successfully!",
+        data: result
+    });
+});
+const publishReview = catchAsync(async (req, res) => {
+    const result = await AdminActionServices.publishReviewIntoDB(req.params.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "review published successfully!",
+        data: result
+    });
+});
+
+const unpublishReview = catchAsync(async (req, res) => {
+    const result = await AdminActionServices.unpublishReviewIntoDB(req.params.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "review unpublished successfully!",
+        data: result
+    });
+});
+const deleteReview = catchAsync(async (req, res) => {
+    const result = await AdminActionServices.deleteReviewFromDB(req.params.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Review deleted successfully!",
         data: result
     });
 });
 
 export const AdminActionControllers = {
 
-    editorPick
+    editorPick,
+    approveReview,
+    unpublishReview,
+    publishReview,
+    deleteReview
 }

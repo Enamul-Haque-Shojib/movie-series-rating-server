@@ -13,6 +13,22 @@ router.patch(
     '/editor-pick/:id',
     AdminActionControllers.editorPick
 );
+router.patch(
+    '/approve-review/:id',
+    AdminActionControllers.approveReview
+);
+router.patch(
+    '/publish-review/:id',
+    AdminActionControllers.publishReview
+);
+router.patch(
+    '/unpublish-review/:id',
+    AdminActionControllers.unpublishReview
+);
+router.delete(
+    '/admin/delete-review/:id',
+    AdminActionControllers.deleteReview
+);
 
 
 

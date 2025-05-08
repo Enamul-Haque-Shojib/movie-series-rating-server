@@ -8,6 +8,9 @@ const addMediaValidationSchema = z.object({
         description: z.string({
             required_error: "Description is required"
         }),
+        synopsis: z.string({
+            required_error: "Synopsis is required"
+        }),
         buy_price: z.string({
             required_error: "Buy price is required"
         }),
@@ -16,6 +19,12 @@ const addMediaValidationSchema = z.object({
         }),
         year: z.string({
             required_error: "Year is required"
+        }),
+        genre: z.string({
+            required_error: "Genre is required"
+        }),
+        streamingPlatform: z.string({
+            required_error: "Streaming platform is required"
         }),
         status: z.enum(["MOVIE", "SERIES"]),
     })
