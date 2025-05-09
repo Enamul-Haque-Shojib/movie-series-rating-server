@@ -56,8 +56,19 @@ const deleteReview = catchAsync(async (req, res) => {
     });
 });
 
-export const AdminActionControllers = {
+const getAllReviews = catchAsync(async (req, res) => {
+    const result = await AdminActionServices.getAllReviewFromDB();
 
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Reviews retrieved successfully!",
+        data: result
+    });
+});
+
+export const AdminActionControllers = {
+getAllReviews,
     editorPick,
     approveReview,
     unpublishReview,

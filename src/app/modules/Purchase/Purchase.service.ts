@@ -56,7 +56,11 @@ const createPaymentIntoStripe = async (payload: { id: string }) => {
             title: true,
             image: true,
             buy_price: true,
-            rent_price: true
+            rent_price: true,
+            genre: true,
+            streamingLinks: true,
+            streamingPlatform: true,
+            status: true
           }
         }
       },
@@ -81,7 +85,11 @@ const createPaymentIntoStripe = async (payload: { id: string }) => {
             title: true,
             image: true,
             buy_price: true,
-            rent_price: true
+            rent_price: true,
+            genre: true,
+            streamingLinks: true,
+            streamingPlatform: true,
+            status: true
           }
         }
       },

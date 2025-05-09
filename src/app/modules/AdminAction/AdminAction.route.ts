@@ -25,6 +25,10 @@ router.patch(
     '/unpublish-review/:id',
     AdminActionControllers.unpublishReview
 );
+router.get(
+    '/get-review',
+    AdminActionControllers.getAllReviews
+);
 router.delete(
     '/admin/delete-review/:id',
     AdminActionControllers.deleteReview

@@ -55,12 +55,28 @@ const deleteReviewFromDB = async (id: string)  => {
  
 };
 
+const getAllReviewFromDB = async ()  => {
+
+    const reviewDelete = await prisma.review.findMany({
+      include:{
+        user: true,
+        media: true,
+        
+      }
+      
+    });
+
+    return reviewDelete;
+ 
+};
+
 export const AdminActionServices = {
   editorPickIntoDB,
   approveReviewIntoDB,
   publishReviewIntoDB,
   unpublishReviewIntoDB,
-  deleteReviewFromDB
+  deleteReviewFromDB,
+  getAllReviewFromDB
 }
 
 

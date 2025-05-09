@@ -10,12 +10,12 @@ router.post(
     '/add-purchase',
     PurchaseControllers.addPurchase
 );
-router.post(
+router.get(
     '/purchase-by-userid/:id',
     PurchaseControllers.getAllPurchaseByUserId
 );
-router.post(
-    '/all-purchase/:id',
+router.get(
+    '/all-purchase',
     PurchaseControllers.getAllPurchase
 );
 router.post(
