@@ -23,8 +23,20 @@ router.post(
     UserActionControllers.addUnLike
 );
 router.post(
+    '/add-review-like',
+    UserActionControllers.addReviewLike
+);
+router.post(
     '/add-comment',
     UserActionControllers.addComment
+);
+router.post(
+    '/add-review-comment',
+    UserActionControllers.addReviewComment
+);
+router.get(
+    '/get-review-comment/:id',
+    UserActionControllers.getReviewCommentsByReviewId
 );
 
 router.get(

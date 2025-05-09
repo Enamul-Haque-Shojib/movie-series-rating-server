@@ -223,6 +223,29 @@ const getCommentsByMediaIdFromDB = async (id: string): Promise<any[]> => {
 
   return result;
 };
+const getReviewCommentsByMediaIdFromDB = async (id: string): Promise<any[]> => {
+  const result = await prisma.reviewComment.findMany({
+    where: {
+      reviewId: id,
+    },
+    select: {
+      id: true,
+      userComment: true,
+      createdAt: true,
+      user: {
+        select: {
+          name: true,
+          photoUrl: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
+  return result;
+};
 
 
 const getAllWatchListByUserIdFromDB = async (userId: string): Promise<WatchList[]> => {
@@ -246,7 +269,9 @@ const getAllReviewByMediaIdFromDB = async (mediaId: string): Promise<WatchList[]
         published: true
       },
       include: {
-        user: true, // This fetches the full media info for each watchlist item
+        user: true,
+        reviewLike: true,
+        reviewComment: true
       },
     });
   
@@ -279,5 +304,6 @@ export const UserActionServices = {
     getAllReviewByMediaIdFromDB,
     deleteReviewFromDB,
     addReviewCommentIntoDB,
-    addReviewLikeIntoDB
+    addReviewLikeIntoDB,
+    getReviewCommentsByMediaIdFromDB
 }

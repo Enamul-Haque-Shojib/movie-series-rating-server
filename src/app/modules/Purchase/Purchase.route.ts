@@ -18,6 +18,10 @@ router.post(
     '/all-purchase/:id',
     PurchaseControllers.getAllPurchase
 );
+router.post(
+    '/create-payment',
+    PurchaseControllers.createPayment
+);
 
 
 

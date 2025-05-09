@@ -85,6 +85,16 @@ const getAllCommentsByMediaId = catchAsync(async (req, res) => {
         data: result
     });
 });
+const getReviewCommentsByReviewId = catchAsync(async (req, res) => {
+    const result = await UserActionServices.getReviewCommentsByMediaIdFromDB(req.params.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "All comments retrieved successfully!",
+        data: result
+    });
+});
 const getAllWatchListByUserId = catchAsync(async (req, res) => {
     const result = await UserActionServices.getAllWatchListByUserIdFromDB(req.params.id);
 
@@ -128,5 +138,6 @@ export const UserActionControllers = {
     getAllReviewByMediaId,
     deleteReview,
     addReviewComment,
-    addReviewLike
+    addReviewLike,
+    getReviewCommentsByReviewId
 }

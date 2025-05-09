@@ -6,7 +6,7 @@ import config from "../../config";
 export const stripe = new Stripe(config.payment_secret_key as string);
 
 const addPurchaseIntoDB = async (payload: Purchase) => {
-  
+  console.log(payload)
     const result = await prisma.purchase.create({
       data: payload,
     });
@@ -15,7 +15,7 @@ const addPurchaseIntoDB = async (payload: Purchase) => {
   };
 
   
-const createPaymentBookingIntoStripe = async (payload: { id: string }) => {
+const createPaymentIntoStripe = async (payload: { id: string }) => {
   const mediaData = await prisma.media.findUnique({
     where:{
       id: payload.id
@@ -98,5 +98,5 @@ const createPaymentBookingIntoStripe = async (payload: { id: string }) => {
     addPurchaseIntoDB,
     getAllPurchaseByUserIdFromDB,
     getAllPurchaseFromDB,
-    createPaymentBookingIntoStripe
+    createPaymentIntoStripe
   }

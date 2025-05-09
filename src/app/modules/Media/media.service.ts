@@ -133,7 +133,8 @@ const getAllMediaFromDB = async (
       include: {
         like: true,
         unlike: true,
-        comment: true
+        comment: true,
+        review: true
       }
     });
     return result;

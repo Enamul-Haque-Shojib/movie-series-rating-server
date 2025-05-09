@@ -181,6 +181,8 @@ model Purchase {
   id         String   @id @default(uuid())
   userId     String
   mediaId    String
+  price      String
+  transactionId String
   type       PurchaseType
   createdAt  DateTime  @default(now())
   user       Auth      @relation(fields: [userId], references: [id])
