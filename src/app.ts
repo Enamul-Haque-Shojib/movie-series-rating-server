@@ -10,6 +10,12 @@ app.use(cors());
 
 
 app.use(express.json());
+app.use(
+  cors({
+    origin: ['http://localhost:3000', "https://movie-series-rating-client.vercel.app"],
+    credentials: true,
+  }),
+);
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 

@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserActionRoutes = void 0;
+const express_1 = __importDefault(require("express"));
+const UserAction_controller_1 = require("./UserAction.controller");
+const router = express_1.default.Router();
+router.post('/add-watchlist', UserAction_controller_1.UserActionControllers.addWatchList);
+router.post('/add-review', UserAction_controller_1.UserActionControllers.addReview);
+router.post('/add-like', UserAction_controller_1.UserActionControllers.addLike);
+router.post('/add-unlike', UserAction_controller_1.UserActionControllers.addUnLike);
+router.post('/add-review-like', UserAction_controller_1.UserActionControllers.addReviewLike);
+router.post('/add-comment', UserAction_controller_1.UserActionControllers.addComment);
+router.post('/add-review-comment', UserAction_controller_1.UserActionControllers.addReviewComment);
+router.get('/get-review-comment/:id', UserAction_controller_1.UserActionControllers.getReviewCommentsByReviewId);
+router.get('/user-comments/:id', UserAction_controller_1.UserActionControllers.getAllCommentsByMediaId);
+router.get('/user-watchlist/:id', UserAction_controller_1.UserActionControllers.getAllWatchListByUserId);
+router.get('/user-review/:id', UserAction_controller_1.UserActionControllers.getAllReviewByMediaId);
+router.get('/review-by-user/:id', UserAction_controller_1.UserActionControllers.getAllReviewByUserId);
+router.delete('/user/delete-review/:id', UserAction_controller_1.UserActionControllers.deleteReview);
+exports.UserActionRoutes = router;

@@ -39,6 +39,8 @@ if(payload.streamingPlatform==="netflix"){
   url = "https://www.netflix.com/bd/"
 }else if(payload.streamingPlatform==="amazon_prime_video"){
   url = "https://www.primevideo.com/offers/nonprimehomepage/ref=dv_web_force_root"
+}else{
+  url="empty"
 }
     
     const result = await prisma.media.update({
@@ -62,6 +64,7 @@ const getAllMediaFromDB = async (
     const { limit, page, skip } = paginationHelper.calculatePagination(options);
     const { searchTerm, ...filterData } = filters;
   
+   
     const andConditions = [];
   
     if (searchTerm) {

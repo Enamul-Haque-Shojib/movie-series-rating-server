@@ -75,7 +75,7 @@ const registerAuthIntoDB = async (req: Request) => {
       role: existingUser.role
   },
       config.jwt.jwt_secret as Secret,
-      config.jwt.expires_in as string
+      config.jwt.expires_in
   );
 
   const refreshToken = jwtHelpers.generateToken({
@@ -83,7 +83,7 @@ const registerAuthIntoDB = async (req: Request) => {
       role: existingUser.role
   },
       config.jwt.refresh_token_secret as Secret,
-      config.jwt.refresh_token_expires_in as string
+      config.jwt.refresh_token_expires_in,
   );
 
   return {
@@ -131,7 +131,7 @@ const refreshToken = async (token: string) => {
         role: userData.role
     },
         config.jwt.jwt_secret as Secret,
-        config.jwt.expires_in as string
+        config.jwt.expires_in
     );
 
     return {

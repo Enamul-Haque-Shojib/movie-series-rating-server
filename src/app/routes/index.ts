@@ -33,6 +33,11 @@ const moduleRoutes = [
         route: PurchaseRoutes
     },
     
+    {
+        path: '/statistics',
+        route: StatisticsRoutes
+    },
+    
     
 ];
 

@@ -115,6 +115,16 @@ const getAllReviewByMediaId = catchAsync(async (req, res) => {
         data: result
     });
 });
+const getAllReviewByUserId = catchAsync(async (req, res) => {
+    const result = await UserActionServices.getAllReviewByUserIdFromDB(req.params.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Review retrieved successfully!",
+        data: result
+    });
+});
 
 const deleteReview = catchAsync(async (req, res) => {
     const result = await UserActionServices.deleteReviewFromDB(req.params.id);
@@ -139,5 +149,6 @@ export const UserActionControllers = {
     deleteReview,
     addReviewComment,
     addReviewLike,
-    getReviewCommentsByReviewId
+    getReviewCommentsByReviewId,
+    getAllReviewByUserId
 }

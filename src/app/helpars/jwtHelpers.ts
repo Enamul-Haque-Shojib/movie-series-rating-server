@@ -1,16 +1,15 @@
-import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
+import jwt, { SignOptions, Secret, JwtPayload } from 'jsonwebtoken';
 
-const generateToken = (payload: any, secret: Secret, expiresIn: string) => {
-    const token = jwt.sign(
-        payload,
-        secret,
-        {
-            algorithm: 'HS256',
-            expiresIn
-        }
-    );
 
-    return token;
+const generateToken = (
+  payload: string | object | Buffer,
+  secret: Secret,
+  expiresIn: SignOptions['expiresIn'] // ✅ Correctly types expiresIn
+): string => {
+  return jwt.sign(payload, secret, {
+    expiresIn,
+    algorithm: 'HS256',
+  });
 };
 
 const verifyToken = (token: string, secret: Secret) => {

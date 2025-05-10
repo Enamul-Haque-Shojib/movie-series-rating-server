@@ -51,6 +51,10 @@ router.get(
     '/user-review/:id',
     UserActionControllers.getAllReviewByMediaId
 );
+router.get(
+    '/review-by-user/:id',
+    UserActionControllers.getAllReviewByUserId
+);
 
 router.delete(
     '/user/delete-review/:id',
