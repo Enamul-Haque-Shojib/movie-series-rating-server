@@ -13,8 +13,16 @@ router.get(
     '/newly-added',
     StatisticsControllers.getNewlyAdded
 );
+router.patch(
+    '/add-editor-picked/:id',
+    StatisticsControllers.addEditorsPicks
+);
+router.patch(
+    '/remove-editor-picked/:id',
+    StatisticsControllers.removeEditorsPicks
+);
 router.get(
-    '/editor-picks',
+    '/editor-picked',
     StatisticsControllers.getEditorsPicks
 );
 

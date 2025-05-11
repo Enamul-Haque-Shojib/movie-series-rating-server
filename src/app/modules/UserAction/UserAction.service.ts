@@ -3,32 +3,39 @@ import prisma from "../../shared/prisma";
 
 
 const addReviewIntoDB = async (payload: Review) => {
+  const { userId, mediaId } = payload;
+
   const isExistReview = await prisma.review.findUnique({
     where: {
       user_media_review_unique: {
-        userId: payload.userId,
-        mediaId: payload.mediaId,
+        userId,
+        mediaId,
+        isDeleted: false,
       },
     },
   });
 
   if (isExistReview) {
-    throw new Error("You have already added review in this media");
+    throw new Error("You have already added a review for this media.");
   }
 
-  const result = await prisma.review.create({
+  // Create new review
+  const newReview = await prisma.review.create({
     data: {
-      userId: payload.userId,
-      mediaId: payload.mediaId,
+      userId,
+      mediaId,
       content: payload.content,
       tags: payload.tags,
       spoiler: payload.spoiler,
-      rating: payload.rating
+      rating: payload.rating,
     },
   });
 
-  return result;
+
+
+  return newReview;
 };
+
 
 const addWatchListIntoDB = async (payload: { userId: string; mediaId: string }) => {
   const isExistMedia = await prisma.watchList.findUnique({
@@ -268,7 +275,8 @@ const getAllReviewByMediaIdFromDB = async (mediaId: string) => {
       where: {
         mediaId,
         approved: true,
-        published: true
+        published: true,
+        isDeleted: false
       },
       include: {
         user: true,
@@ -283,6 +291,7 @@ const getAllReviewByUserIdFromDB = async (userId: string) => {
     const result = await prisma.review.findMany({
       where: {
         userId,
+        isDeleted: false
       },
       include: {
         user: true,
@@ -297,14 +306,40 @@ const getAllReviewByUserIdFromDB = async (userId: string) => {
 
   const deleteReviewFromDB = async (id: string)  => {
 
-    const reviewDelete = await prisma.review.delete({
+    const reviewDelete = await prisma.review.update({
+        where: { 
+          id,
+          published: false
+         },
+         data:{isDeleted: true}
+      });
+
+    return reviewDelete;
+ 
+};
+  const getReviewFromDB = async (id: string)  => {
+
+    const reviewData = await prisma.review.findUnique({
         where: { 
           id,
           published: false
          },
       });
 
-    return reviewDelete;
+    return reviewData;
+ 
+};
+
+  const updateReviewIntoDB = async (id: string, payload: Partial<Review>)  => {
+
+    const reviewData = await prisma.review.update({
+        where: { 
+          id,
+         },
+         data: payload
+      });
+
+    return reviewData;
  
 };
   
@@ -323,6 +358,8 @@ export const UserActionServices = {
     addReviewCommentIntoDB,
     addReviewLikeIntoDB,
     getReviewCommentsByMediaIdFromDB,
-    getAllReviewByUserIdFromDB
+    getAllReviewByUserIdFromDB,
+    getReviewFromDB,
+    updateReviewIntoDB
     
 }

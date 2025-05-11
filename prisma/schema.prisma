@@ -121,6 +121,7 @@ model Review {
   spoiler     Boolean     @default(false)
   approved    Boolean    @default(false)
   published    Boolean    @default(false)
+  isDeleted    Boolean     @default(false)
  reviewLike      ReviewLike[]
  reviewComment      ReviewComment[]
    user     Auth     @relation(fields: [userId], references: [id])
@@ -128,7 +129,7 @@ model Review {
 
   createdAt      DateTime       @default(now())
   updatedAt       DateTime     @updatedAt
-  @@unique([userId, mediaId],  name: "user_media_review_unique")
+  @@unique([userId, mediaId, isDeleted],  name: "user_media_review_unique")
   @@map("review")
 }
 

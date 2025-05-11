@@ -153,13 +153,14 @@ const getAllMediaFromDB = async (
         }
     });
     
-    await prisma.media.delete({
+    const result = await prisma.media.update({
         where:{
             id
         },
+        data:{isDeleted:true}
         
     })
-
+return result;
     
 };
 

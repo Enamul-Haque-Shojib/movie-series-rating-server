@@ -15,7 +15,7 @@ const editorPick = catchAsync(async (req, res) => {
     });
 });
 const approveReview = catchAsync(async (req, res) => {
-    const result = await AdminActionServices.approveReviewIntoDB(req.params.id);
+    const result = await AdminActionServices.approveReviewIntoDB(req.params.id, req.body);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -25,7 +25,7 @@ const approveReview = catchAsync(async (req, res) => {
     });
 });
 const publishReview = catchAsync(async (req, res) => {
-    const result = await AdminActionServices.publishReviewIntoDB(req.params.id);
+    const result = await AdminActionServices.publishReviewIntoDB(req.params.id, req.body);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -36,7 +36,7 @@ const publishReview = catchAsync(async (req, res) => {
 });
 
 const unpublishReview = catchAsync(async (req, res) => {
-    const result = await AdminActionServices.unpublishReviewIntoDB(req.params.id);
+    const result = await AdminActionServices.unpublishReviewIntoDB(req.params.id, req.body);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -47,7 +47,7 @@ const unpublishReview = catchAsync(async (req, res) => {
 });
 const deleteReview = catchAsync(async (req, res) => {
     const result = await AdminActionServices.deleteReviewFromDB(req.params.id);
-
+console.log('--->>>>',result)
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,

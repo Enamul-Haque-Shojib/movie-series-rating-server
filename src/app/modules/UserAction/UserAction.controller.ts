@@ -136,6 +136,26 @@ const deleteReview = catchAsync(async (req, res) => {
         data: result
     });
 });
+const getOneReview = catchAsync(async (req, res) => {
+    const result = await UserActionServices.getReviewFromDB(req.params.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "One Review retrieved successfully!",
+        data: result
+    });
+});
+const updateReview = catchAsync(async (req, res) => {
+    const result = await UserActionServices.updateReviewIntoDB(req.params.id, req.body);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "update Review successfully!",
+        data: result
+    });
+});
 
 export const UserActionControllers = {
     addWatchList,
@@ -150,5 +170,7 @@ export const UserActionControllers = {
     addReviewComment,
     addReviewLike,
     getReviewCommentsByReviewId,
-    getAllReviewByUserId
+    getAllReviewByUserId,
+    getOneReview,
+    updateReview
 }

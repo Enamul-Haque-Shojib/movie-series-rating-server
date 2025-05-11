@@ -60,6 +60,14 @@ router.delete(
     '/user/delete-review/:id',
     UserActionControllers.deleteReview
 );
+router.get(
+    '/user/one-review/:id',
+    UserActionControllers.getOneReview
+);
+router.patch(
+    '/user/update-review/:id',
+    UserActionControllers.updateReview
+);
 
 
 

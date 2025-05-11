@@ -2,6 +2,10 @@ import prisma from "../../shared/prisma";
 
 
 
+const getHighestRatedFromDB = async()=>{
+  
+}
+
 const getTopRatedThisWeekFromDB = async () => {
   const oneWeekAgo = new Date();
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
@@ -41,7 +45,7 @@ const getNewlyAddedFromDB = async () => {
 
 
 
-export const getEditorsPicksFromDB = async () => {
+const getEditorsPicksFromDB = async () => {
   
     const picks = await prisma.media.findMany({
       where: {
@@ -58,10 +62,39 @@ export const getEditorsPicksFromDB = async () => {
  
 };
 
+const addEditorPicksIntoDB = async (id: string, payload: {isEditorsPick:boolean}) => {
+  
+    const picks = await prisma.media.update({
+      where: {
+        id,
+        isDeleted: false,
+      },
+      data: payload
+    });
+
+    return picks;
+ 
+};
+const removeEditorPicksIntoDB = async (id: string, payload: {isEditorsPick:boolean}) => {
+  
+    const picks = await prisma.media.update({
+      where: {
+        id,
+        isDeleted: false,
+      },
+      data: payload
+    });
+
+    return picks;
+ 
+};
+
 
 
 export const StatisticsServices = {
     getTopRatedThisWeekFromDB,
     getNewlyAddedFromDB,
-    getEditorsPicksFromDB
+    getEditorsPicksFromDB,
+    addEditorPicksIntoDB,
+    removeEditorPicksIntoDB
 }
