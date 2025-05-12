@@ -40,6 +40,13 @@ Base URL: [https://movie-series-rating-client.vercel.app/](https://movie-series-
 6. The server will run on http://localhost:3001 by default.
 
 
+### ✅ 5. **Credentials**
+ #### Admin:
+ - email: admin@gmail.com
+ - pass: 123456789
+ #### User:
+ - email: user@gmail.com
+ - pass: 123456789
 
 
 ### ✅ 5. **Key Features**
