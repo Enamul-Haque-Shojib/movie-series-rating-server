@@ -6,7 +6,7 @@ import config from "../../config";
 export const stripe = new Stripe(config.payment_secret_key as string);
 
 const addPurchaseIntoDB = async (payload: Purchase) => {
-  console.log(payload)
+  
     const result = await prisma.purchase.create({
       data: payload,
     });
