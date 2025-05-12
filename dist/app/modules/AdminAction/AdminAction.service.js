@@ -21,32 +21,68 @@ const editorPickIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () 
     });
     return newlyAdded;
 });
-const approveReviewIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const approveReviewIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const reviewUpdate = yield prisma_1.default.review.update({
         where: { id },
-        data: { approved: true },
+        // data: { approved: true },
+        data: payload,
+    });
+    const allReviews = yield prisma_1.default.review.findMany({
+        where: {
+            mediaId: reviewUpdate.mediaId,
+            isDeleted: false,
+            approved: true, // Optional: only include approved reviews
+        },
+        select: {
+            rating: true,
+        },
+    });
+    // Calculate average rating
+    const totalRating = allReviews.reduce((sum, r) => sum + r.rating, 0);
+    const averageRating = allReviews.length > 0 ? totalRating / allReviews.length : 0;
+    // Update Media with new average rating
+    yield prisma_1.default.media.update({
+        where: {
+            id: reviewUpdate.mediaId
+        },
+        data: { rating: averageRating },
     });
     return reviewUpdate;
 });
-const publishReviewIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const publishReviewIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const reviewUpdate = yield prisma_1.default.review.update({
         where: { id },
-        data: { published: true },
+        // data: { published: true },
+        data: payload,
     });
     return reviewUpdate;
 });
-const unpublishReviewIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const unpublishReviewIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const reviewUpdate = yield prisma_1.default.review.update({
         where: { id },
-        data: { published: false },
+        // data: { published: false },
+        data: payload,
     });
     return reviewUpdate;
 });
 const deleteReviewFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const reviewDelete = yield prisma_1.default.review.delete({
-        where: { id },
-    });
-    return reviewDelete;
+    const result = yield prisma_1.default.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
+        yield tx.reviewLike.deleteMany({
+            where: {
+                reviewId: id
+            }
+        });
+        yield tx.reviewComment.deleteMany({
+            where: {
+                reviewId: id
+            }
+        });
+        const deleteReview = yield tx.review.delete({
+            where: { id },
+        });
+        return deleteReview;
+    }));
+    return result;
 });
 const getAllReviewFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const reviewDelete = yield prisma_1.default.review.findMany({

@@ -27,7 +27,7 @@ const editorPick = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
     });
 }));
 const approveReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield AdminAction_service_1.AdminActionServices.approveReviewIntoDB(req.params.id);
+    const result = yield AdminAction_service_1.AdminActionServices.approveReviewIntoDB(req.params.id, req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -36,7 +36,7 @@ const approveReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     });
 }));
 const publishReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield AdminAction_service_1.AdminActionServices.publishReviewIntoDB(req.params.id);
+    const result = yield AdminAction_service_1.AdminActionServices.publishReviewIntoDB(req.params.id, req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -45,7 +45,7 @@ const publishReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     });
 }));
 const unpublishReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield AdminAction_service_1.AdminActionServices.unpublishReviewIntoDB(req.params.id);
+    const result = yield AdminAction_service_1.AdminActionServices.unpublishReviewIntoDB(req.params.id, req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -55,6 +55,7 @@ const unpublishReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
 }));
 const deleteReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield AdminAction_service_1.AdminActionServices.deleteReviewFromDB(req.params.id);
+    console.log('--->>>>', result);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,

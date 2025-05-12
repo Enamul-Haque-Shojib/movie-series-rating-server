@@ -134,6 +134,24 @@ const deleteReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         data: result
     });
 }));
+const getOneReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield UserAction_service_1.UserActionServices.getReviewFromDB(req.params.id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "One Review retrieved successfully!",
+        data: result
+    });
+}));
+const updateReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield UserAction_service_1.UserActionServices.updateReviewIntoDB(req.params.id, req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "update Review successfully!",
+        data: result
+    });
+}));
 exports.UserActionControllers = {
     addWatchList,
     getAllWatchListByUserId,
@@ -147,5 +165,7 @@ exports.UserActionControllers = {
     addReviewComment,
     addReviewLike,
     getReviewCommentsByReviewId,
-    getAllReviewByUserId
+    getAllReviewByUserId,
+    getOneReview,
+    updateReview
 };

@@ -204,6 +204,9 @@ const addReviewCommentIntoDB = async (payload: { userId: string; reviewId: strin
       reviewId: payload.reviewId,
       userComment: payload.userComment
     },
+    include:{
+      user: true
+    }
   });
 
   return result;

@@ -6,6 +6,22 @@ const router = express.Router();
 
 
 router.get(
+    '/total-media-admin',
+    StatisticsControllers.getTotalStatisticsForAdmin
+);
+router.get(
+    '/total-media-user/:id',
+    StatisticsControllers.getTotalStatisticsForUser
+);
+router.get(
+    '/highest-rated-movie',
+    StatisticsControllers.getHighestRatedMovies
+);
+router.get(
+    '/highest-rated-series',
+    StatisticsControllers.getHighestRatedSeries
+);
+router.get(
     '/top-rated-week',
     StatisticsControllers.getTopRatedThisWeek
 );

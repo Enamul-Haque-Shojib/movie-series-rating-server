@@ -15,28 +15,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserActionServices = void 0;
 const prisma_1 = __importDefault(require("../../shared/prisma"));
 const addReviewIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId, mediaId } = payload;
     const isExistReview = yield prisma_1.default.review.findUnique({
         where: {
             user_media_review_unique: {
-                userId: payload.userId,
-                mediaId: payload.mediaId,
+                userId,
+                mediaId,
+                isDeleted: false,
             },
         },
     });
     if (isExistReview) {
-        throw new Error("You have already added review in this media");
+        throw new Error("You have already added a review for this media.");
     }
-    const result = yield prisma_1.default.review.create({
+    // Create new review
+    const newReview = yield prisma_1.default.review.create({
         data: {
-            userId: payload.userId,
-            mediaId: payload.mediaId,
+            userId,
+            mediaId,
             content: payload.content,
             tags: payload.tags,
             spoiler: payload.spoiler,
-            rating: payload.rating
+            rating: payload.rating,
         },
     });
-    return result;
+    return newReview;
 });
 const addWatchListIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const isExistMedia = yield prisma_1.default.watchList.findUnique({
@@ -180,6 +183,9 @@ const addReviewCommentIntoDB = (payload) => __awaiter(void 0, void 0, void 0, fu
             reviewId: payload.reviewId,
             userComment: payload.userComment
         },
+        include: {
+            user: true
+        }
     });
     return result;
 });
@@ -243,7 +249,8 @@ const getAllReviewByMediaIdFromDB = (mediaId) => __awaiter(void 0, void 0, void 
         where: {
             mediaId,
             approved: true,
-            published: true
+            published: true,
+            isDeleted: false
         },
         include: {
             user: true,
@@ -257,6 +264,7 @@ const getAllReviewByUserIdFromDB = (userId) => __awaiter(void 0, void 0, void 0,
     const result = yield prisma_1.default.review.findMany({
         where: {
             userId,
+            isDeleted: false
         },
         include: {
             user: true,
@@ -268,13 +276,32 @@ const getAllReviewByUserIdFromDB = (userId) => __awaiter(void 0, void 0, void 0,
     return result;
 });
 const deleteReviewFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const reviewDelete = yield prisma_1.default.review.delete({
+    const reviewDelete = yield prisma_1.default.review.update({
+        where: {
+            id,
+            published: false
+        },
+        data: { isDeleted: true }
+    });
+    return reviewDelete;
+});
+const getReviewFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const reviewData = yield prisma_1.default.review.findUnique({
         where: {
             id,
             published: false
         },
     });
-    return reviewDelete;
+    return reviewData;
+});
+const updateReviewIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const reviewData = yield prisma_1.default.review.update({
+        where: {
+            id,
+        },
+        data: payload
+    });
+    return reviewData;
 });
 exports.UserActionServices = {
     addWatchListIntoDB,
@@ -289,5 +316,7 @@ exports.UserActionServices = {
     addReviewCommentIntoDB,
     addReviewLikeIntoDB,
     getReviewCommentsByMediaIdFromDB,
-    getAllReviewByUserIdFromDB
+    getAllReviewByUserIdFromDB,
+    getReviewFromDB,
+    updateReviewIntoDB
 };

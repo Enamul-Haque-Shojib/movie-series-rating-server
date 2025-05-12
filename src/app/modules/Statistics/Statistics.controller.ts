@@ -5,6 +5,48 @@ import { StatisticsServices } from "./Statistics.service";
 
 
 
+const getTotalStatisticsForAdmin = catchAsync(async (req, res) => {
+    const result = await StatisticsServices.getTotalMediaStatisticsForAdmin();
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Total media statistics for admin retrieved successfully!",
+        data: result
+    });
+});
+const getTotalStatisticsForUser = catchAsync(async (req, res) => {
+    const result = await StatisticsServices.getTotalMediaStatisticsForUser(req.params.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Total media statistics for user retrieved successfully!",
+        data: result
+    });
+});
+
+const getHighestRatedMovies = catchAsync(async (req, res) => {
+    const result = await StatisticsServices.getHighestRatedMovieFromDB();
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Movies retrieved successfully!",
+        data: result
+    });
+});
+const getHighestRatedSeries = catchAsync(async (req, res) => {
+    const result = await StatisticsServices.getHighestRatedSeriesFromDB();
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Series retrieved successfully!",
+        data: result
+    });
+});
+
 const getTopRatedThisWeek = catchAsync(async (req, res) => {
     const result = await StatisticsServices.getTopRatedThisWeekFromDB();
 
@@ -66,5 +108,9 @@ export const StatisticsControllers = {
     getNewlyAdded,
     getEditorsPicks,
     addEditorsPicks,
-    removeEditorsPicks
+    removeEditorsPicks,
+    getHighestRatedMovies,
+    getHighestRatedSeries,
+    getTotalStatisticsForAdmin,
+    getTotalStatisticsForUser
 }

@@ -20,4 +20,6 @@ router.get('/user-watchlist/:id', UserAction_controller_1.UserActionControllers.
 router.get('/user-review/:id', UserAction_controller_1.UserActionControllers.getAllReviewByMediaId);
 router.get('/review-by-user/:id', UserAction_controller_1.UserActionControllers.getAllReviewByUserId);
 router.delete('/user/delete-review/:id', UserAction_controller_1.UserActionControllers.deleteReview);
+router.get('/user/one-review/:id', UserAction_controller_1.UserActionControllers.getOneReview);
+router.patch('/user/update-review/:id', UserAction_controller_1.UserActionControllers.updateReview);
 exports.UserActionRoutes = router;

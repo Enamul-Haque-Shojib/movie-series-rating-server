@@ -142,11 +142,13 @@ const deleteMediaFromDB = (id) => __awaiter(void 0, void 0, void 0, function* ()
             id,
         }
     });
-    yield prisma_1.default.media.delete({
+    const result = yield prisma_1.default.media.update({
         where: {
             id
         },
+        data: { isDeleted: true }
     });
+    return result;
 });
 exports.MediaServices = {
     addMediaIntoDB,
