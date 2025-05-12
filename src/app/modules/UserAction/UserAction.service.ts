@@ -173,7 +173,7 @@ const addCommentIntoDB = async (payload: { userId: string; mediaId: string; user
 
 const addReviewLikeIntoDB = async (payload: { userId: string; reviewId: string }) => {
   
-  console.log(payload)
+
   const isExistLike = await prisma.reviewLike.findUnique({
     where: {
       user_review_like_unique: {
