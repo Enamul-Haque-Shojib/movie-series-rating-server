@@ -68,7 +68,7 @@ const registerAuthIntoDB = async (req: Request) => {
         throw new Error("Password incorrect!")
     }
 
-    console.log('Login successfully');
+   
 
     const accessToken = jwtHelpers.generateToken({
       email: existingUser.email,
