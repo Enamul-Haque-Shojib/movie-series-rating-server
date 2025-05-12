@@ -28,13 +28,30 @@ const prisma_1 = __importDefault(require("../../shared/prisma"));
 const paginationHelper_1 = require("../../helpars/paginationHelper");
 const media_constant_1 = require("./media.constant");
 const addMediaIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(payload);
     let url = "";
     if (payload.streamingPlatform === "netflix") {
         url = "https://www.netflix.com/bd/";
     }
     else if (payload.streamingPlatform === "amazon_prime_video") {
         url = "https://www.primevideo.com/offers/nonprimehomepage/ref=dv_web_force_root";
+    }
+    else if (payload.streamingPlatform === "disney+") {
+        url = "https://www.disneyinternational.com/";
+    }
+    else if (payload.streamingPlatform === "hbo") {
+        url = "https://www.hbo.com/";
+    }
+    else if (payload.streamingPlatform === "apple_tv") {
+        url = "https://tv.apple.com/";
+    }
+    else if (payload.streamingPlatform === "Peacock") {
+        url = "https://www.peacocktv.com/unavailable";
+    }
+    else if (payload.streamingPlatform === "paramount") {
+        url = "https://www.paramountplus.com/intl/";
+    }
+    else if (payload.streamingPlatform === "hulu") {
+        url = "https://www.hulu.com/welcome";
     }
     const result = yield prisma_1.default.media.create({
         data: Object.assign(Object.assign({}, payload), { streamingLinks: url })
@@ -54,8 +71,23 @@ const updateMediaIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, fun
     else if (payload.streamingPlatform === "amazon_prime_video") {
         url = "https://www.primevideo.com/offers/nonprimehomepage/ref=dv_web_force_root";
     }
-    else {
-        url = "empty";
+    else if (payload.streamingPlatform === "disney+") {
+        url = "https://www.disneyinternational.com/";
+    }
+    else if (payload.streamingPlatform === "hbo") {
+        url = "https://www.hbo.com/";
+    }
+    else if (payload.streamingPlatform === "apple_tv") {
+        url = "https://tv.apple.com/";
+    }
+    else if (payload.streamingPlatform === "Peacock") {
+        url = "https://www.peacocktv.com/unavailable";
+    }
+    else if (payload.streamingPlatform === "paramount") {
+        url = "https://www.paramountplus.com/intl/";
+    }
+    else if (payload.streamingPlatform === "hulu") {
+        url = "https://www.hulu.com/welcome";
     }
     const result = yield prisma_1.default.media.update({
         where: {

@@ -156,7 +156,6 @@ const addCommentIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function
     return result;
 });
 const addReviewLikeIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(payload);
     const isExistLike = yield prisma_1.default.reviewLike.findUnique({
         where: {
             user_review_like_unique: {

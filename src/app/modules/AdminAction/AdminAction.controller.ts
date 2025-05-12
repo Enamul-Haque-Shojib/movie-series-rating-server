@@ -47,7 +47,7 @@ const unpublishReview = catchAsync(async (req, res) => {
 });
 const deleteReview = catchAsync(async (req, res) => {
     const result = await AdminActionServices.deleteReviewFromDB(req.params.id);
-console.log('--->>>>',result)
+
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,

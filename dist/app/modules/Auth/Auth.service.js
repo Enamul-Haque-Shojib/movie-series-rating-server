@@ -104,7 +104,6 @@ const loginAuthIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function*
     if (!isCorrectPassword) {
         throw new Error("Password incorrect!");
     }
-    console.log('Login successfully');
     const accessToken = jwtHelpers_1.jwtHelpers.generateToken({
         email: existingUser.email,
         role: existingUser.role

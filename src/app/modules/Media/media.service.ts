@@ -14,6 +14,24 @@ if(payload.streamingPlatform==="netflix"){
 }else if(payload.streamingPlatform==="amazon_prime_video"){
   url = "https://www.primevideo.com/offers/nonprimehomepage/ref=dv_web_force_root"
 }
+else if(payload.streamingPlatform==="disney+"){
+  url = "https://www.disneyinternational.com/"
+}
+else if(payload.streamingPlatform==="hbo"){
+  url = "https://www.hbo.com/"
+}
+else if(payload.streamingPlatform==="apple_tv"){
+  url = "https://tv.apple.com/"
+}
+else if(payload.streamingPlatform==="Peacock"){
+  url = "https://www.peacocktv.com/unavailable"
+}
+else if(payload.streamingPlatform==="paramount"){
+  url = "https://www.paramountplus.com/intl/"
+}
+else if(payload.streamingPlatform==="hulu"){
+  url = "https://www.hulu.com/welcome"
+}
     
     const result = await prisma.media.create({
         data: {
@@ -39,9 +57,26 @@ if(payload.streamingPlatform==="netflix"){
   url = "https://www.netflix.com/bd/"
 }else if(payload.streamingPlatform==="amazon_prime_video"){
   url = "https://www.primevideo.com/offers/nonprimehomepage/ref=dv_web_force_root"
-}else{
-  url="empty"
 }
+else if(payload.streamingPlatform==="disney+"){
+  url = "https://www.disneyinternational.com/"
+}
+else if(payload.streamingPlatform==="hbo"){
+  url = "https://www.hbo.com/"
+}
+else if(payload.streamingPlatform==="apple_tv"){
+  url = "https://tv.apple.com/"
+}
+else if(payload.streamingPlatform==="Peacock"){
+  url = "https://www.peacocktv.com/unavailable"
+}
+else if(payload.streamingPlatform==="paramount"){
+  url = "https://www.paramountplus.com/intl/"
+}
+else if(payload.streamingPlatform==="hulu"){
+  url = "https://www.hulu.com/welcome"
+}
+  
     
     const result = await prisma.media.update({
         where:{

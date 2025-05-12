@@ -18,7 +18,6 @@ const stripe_1 = __importDefault(require("stripe"));
 const config_1 = __importDefault(require("../../config"));
 exports.stripe = new stripe_1.default(config_1.default.payment_secret_key);
 const addPurchaseIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(payload);
     const result = yield prisma_1.default.purchase.create({
         data: payload,
     });
